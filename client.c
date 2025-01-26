@@ -4,7 +4,7 @@
 
 #pragma comment(lib, "Ws2_32.lib")
 
-#define DEFAULT_PORT 27015
+#define DEFAULT_PORT "27015"
 #define DEFAULT_BUF_LEN 512
 
 int main(int argc, char *argv[])
@@ -78,7 +78,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    printf("Bytes sent: %d", iResult);
+    printf("Bytes sent: %d\n", iResult);
 
     iResult = shutdown(ConnectSocket, SD_SEND);
     if (iResult == SOCKET_ERROR)

@@ -4,14 +4,14 @@
 
 #pragma comment(lib, "Ws2_32.lib")
 
-#define DEFAULT_PORT 27015
+#define DEFAULT_PORT "27015"
 #define DEFAULT_BUF_LEN 512
 
 int main()
 {
     WSADATA wsadata;
     int recvbuflen = DEFAULT_BUF_LEN;
-    char *recvbuf[DEFAULT_BUF_LEN];
+    char recvbuf[DEFAULT_BUF_LEN];
     int iResult;
     int iSendResult;
 
@@ -30,7 +30,7 @@ int main()
     hints.ai_family = AF_INET;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_protocol = IPPROTO_TCP;
-    hints.ai_protocol = AI_PASSIVE;
+    hints.ai_flags = AI_PASSIVE;
 
     iResult = getaddrinfo(NULL, DEFAULT_PORT, &hints, &result);
     if (iResult != 0)
