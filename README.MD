@@ -14,7 +14,7 @@ This project uses `Winsock2` from `Win32` to create client and server processes 
 
 - MinGW installed on your local Windows machine.
 
-### Instructions [^1]
+### Instructions
 1. Navigate to the project folder
 ```bash
 cd path/to/c-socket-basic
