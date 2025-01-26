@@ -10,6 +10,13 @@
 int main()
 {
     WSADATA wsadata;
+
+    SOCKET ListenSocket = INVALID_SOCKET;
+    SOCKET ClientSocket = INVALID_SOCKET;
+
+    struct addrinfo *result = NULL;
+    struct addrinfo hints;
+
     int recvbuflen = DEFAULT_BUF_LEN;
     char recvbuf[DEFAULT_BUF_LEN];
     int iResult;
@@ -21,10 +28,6 @@ int main()
         printf("WSAStartup failed: %d", iResult);
         return 1;
     }
-
-    struct addrinfo *result = NULL,
-                    *ptr = NULL,
-                    hints;
 
     ZeroMemory(&hints, sizeof(hints));
     hints.ai_family = AF_INET;
@@ -39,8 +42,6 @@ int main()
         WSACleanup();
         return 1;
     }
-
-    SOCKET ListenSocket = INVALID_SOCKET;
 
     ListenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
     if (ListenSocket == INVALID_SOCKET)
@@ -61,9 +62,10 @@ int main()
         return 1;
     }
 
-    freeaddrinfo(result); // addr info is no longer necessary because bind was successful
+    freeaddrinfo(result);
 
-    if (listen(ListenSocket, SOMAXCONN) == SOCKET_ERROR)
+    iResult = listen(ListenSocket, SOMAXCONN);
+    if (iResult == SOCKET_ERROR)
     {
         printf("listen failed: %d\n", WSAGetLastError());
         closesocket(ListenSocket);
@@ -71,9 +73,7 @@ int main()
         return 1;
     }
 
-    SOCKET ClientSocket = INVALID_SOCKET;
     ClientSocket = accept(ListenSocket, NULL, NULL);
-
     if (ClientSocket == INVALID_SOCKET)
     {
         printf("accept failed: %d\n", WSAGetLastError());
@@ -82,7 +82,6 @@ int main()
         return 1;
     }
 
-    // Only accepts one connection
     closesocket(ListenSocket);
 
     do
