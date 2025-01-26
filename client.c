@@ -5,10 +5,16 @@
 #pragma comment(lib, "Ws2_32.lib")
 
 #define DEFAULT_PORT 27015
+#define DEFAULT_BUF_LEN 512
 
 int main(int argc, char *argv[])
 {
     WSADATA wsadata;
+
+    int recvbuflen = DEFAULT_BUF_LEN;
+    const char *sendbuf = "this is a test";
+    char recvbuf[DEFAULT_BUF_LEN];
+
     int iResult;
     iResult = WSAStartup(MAKEWORD(2, 2), &wsadata);
 
@@ -63,7 +69,47 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    printf("Hello world!");
+    iResult = send(ConnectSocket, sendbuf, (int)strlen(sendbuf), 0);
+    if (iResult == SOCKET_ERROR)
+    {
+        printf("send failed: %d\n", WSAGetLastError());
+        closesocket(ConnectSocket);
+        WSACleanup();
+        return 1;
+    }
+
+    printf("Bytes sent: %d", iResult);
+
+    iResult = shutdown(ConnectSocket, SD_SEND);
+    if (iResult == SOCKET_ERROR)
+    {
+        printf("shutdown failed: %d\n", WSAGetLastError());
+        closesocket(ConnectSocket);
+        WSACleanup();
+        return 1;
+    }
+
+    do
+    {
+        iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
+        if (iResult > 0)
+        {
+            printf("Bytes received: %d\n", iResult);
+        }
+        else if (iResult == 0)
+        {
+            printf("Connection closed\n");
+        }
+        else
+        {
+            printf("recv failed: %d\n", WSAGetLastError());
+        }
+    } while (iResult > 0);
+
+    closesocket(ConnectSocket);
+    WSACleanup();
+
+    printf("Program finished.\n");
 
     return 0;
 }
