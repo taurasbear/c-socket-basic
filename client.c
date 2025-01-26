@@ -107,7 +107,7 @@ int main(int argc, char *argv[])
         }
         else if (iResult == 0)
         {
-            printf("Connection closed\n");
+            printf("Connection closing...\n");
         }
         else
         {
