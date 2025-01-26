@@ -20,12 +20,12 @@ This project uses `Winsock2` from `Win32` to create client and server processes 
 cd path/to/c-socket-basic
 ```
 2. Compile the server project
-```bash
+```powershell
 gcc -o server.exe server.c -lws2_32
 ```
 
 3. Compile the client project
-```bash
+```powershell
 gcc -o client.exe client.c -lws2_32
 ```
 
