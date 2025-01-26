@@ -29,12 +29,12 @@ gcc -o server.exe server.c -lws2_32
 gcc -o client.exe client.c -lws2_32
 ```
 
-4. Run [server.exe]:
+4. Run `server.exe`:
     ```bash
     ./server.exe
     ```
 
-5. Run [client.exe] with the server name as the argument:
+5. Run `client.exe` with the server name as the argument:
     ```bash
     ./client.exe <server-name>
     ```
