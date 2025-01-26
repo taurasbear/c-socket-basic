@@ -7,12 +7,12 @@
 int main()
 {
     WSADATA wsadata;
-    int result;
-    result = WSAStartup(MAKEWORD(2, 2), &wsadata);
+    int iResult;
+    iResult = WSAStartup(MAKEWORD(2, 2), &wsadata);
 
-    if (result != 0)
+    if (iResult != 0)
     {
-        printf("WSAStartup failed: %d", result);
+        printf("WSAStartup failed: %d", iResult);
         return 1;
     }
 
