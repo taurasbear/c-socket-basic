@@ -40,10 +40,12 @@ gcc -o client.exe client.c -lws2_32
     ```
     If you're running the client and server locally on your machine, you can pass `localhost` or `127.0.0.1` as the server name.
 
-### Example output
+### Expected output
 
 Client process:
+
 ![Client example output](client-logs.png)
 
 Server process:
+
 ![Server example output](server-logs.png)
